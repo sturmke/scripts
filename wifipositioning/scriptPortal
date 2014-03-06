@@ -1,0 +1,16 @@
+file=$1
+line=$(awk '/F0:B4:79:03:53:1D/{ print NR; exit }' $file )
+if [[ -z $line ]]; then
+        echo "-1"
+else
+        line=$(($line+1))
+        quality=$(cat $file | sed -n "$line"p | cut -d '=' -f 2| cut -b 1-2)
+        if [ "$quality" -ge 65 ]; then
+                tusse="$((70 - $quality))"
+                answer=$(bc -l <<< "scale=2;$tusse")
+        else
+                tusse="$((70 - $quality))"
+                answer=$(bc -l <<< "scale=2;$tusse/1.5")
+        fi
+        echo $answer
+fi

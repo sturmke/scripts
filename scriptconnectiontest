@@ -1,0 +1,10 @@
+while true;
+do
+result=$(sudo ethtool wlan0)
+result2=$(sudo ethtool eth0)
+if [[ $result == *no* && $result2 == *no* ]]
+then
+sudo kill $(ps aux |awk '/RPiServer/{print $2}')
+fi
+sleep 5
+done

@@ -1,7 +1,7 @@
 file=$1
 line=$(awk '/00:21:91:04:B9:25/{ print NR; exit }' $file )
 if [[ -z $line ]]; then
-        echo "-1"
+        echo "0"
 else
         line=$(($line+1))
         quality=$(cat $file | sed -n "$line"p | cut -d '=' -f 2| cut -b 1-2)
